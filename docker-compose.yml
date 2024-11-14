@@ -1,0 +1,36 @@
+services:
+  mariadb:
+    image: mariadb:11.2.5
+    container_name: mariadb
+    environment:
+      MYSQL_DATABASE: nest_api
+      MYSQL_USER: nest_api
+      MYSQL_PASSWORD: nest_api
+      MARIADB_RANDOM_ROOT_PASSWORD: true
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql 
+  adminer:
+    image: adminer:latest
+    container_name: adminer
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mariadb
+
+  # nodejs:
+  #   image: node:22.0.0
+  #   container_name: nodejs
+  #   working_dir: /usr/src/nest_api
+  #   command: nest start:dev
+  #   volumes:
+  #     - ./:/usr/src/nest_api
+  #   ports:
+  #     - "3000:3000"
+  #     - "3333:3333"
+  #   depends_on:
+  #     - mariadb
+
+volumes:
+  mariadb_data:
