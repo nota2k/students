@@ -1,5 +1,6 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { UsersService } from './users.service';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -8,8 +9,8 @@ export class UsersController {
   findAll() {
     return this.usersService.findAll();
   }
-  @Post()
-  create() {
-    return this.usersService.create();
+  @Post('add')
+  create(@Body() createUserDto: CreateUserDto) {
+    return await this.usersService.create(createUserDto);
   }
 }
